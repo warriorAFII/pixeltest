@@ -7,8 +7,8 @@ export const Typography = StyleSheet.create({
     fontWeight: "bold",
   },
   body: {
-    fontFamily: "Raleway_700Regular",
+    fontFamily: "Raleway_500Medium",
     fontSize: 20,
-    fontWeight: "400",
+    fontWeight: "500",
   },
 });

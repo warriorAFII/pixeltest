@@ -17,7 +17,6 @@ export const GET_TASKS = gql`
 export const fetchTasks = async () => {
   try {
     const { data } = await client.query({ query: GET_TASKS });
-
     return data.taskList;
   } catch (error) {
     console.error("Error fetching tasks:", error);
