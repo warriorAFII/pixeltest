@@ -8,7 +8,6 @@ Before you begin, make sure you have the following tools and software installed:
 
 - Node (>= 18)
 - Ruby (>= 2.6.10)
-- Yarn
 - Android Studio (for Android development)
 - Xcode 15 (for iOS development)
 - Expo app on simulator
