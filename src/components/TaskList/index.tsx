@@ -23,7 +23,7 @@ type SortOrder = "time" | "alphabetical";
 const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
   const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
   const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder>("time");
-  const sheetRef = useRef(null);
+  const BottomSheetRef = useRef(null);
 
   useEffect(() => {
     setSortedTasks(tasks);
@@ -43,18 +43,15 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
 
     setSortedTasks(tasksCopy);
     setSelectedSortOrder(order);
-    sheetRef.current.close();
+    BottomSheetRef.current.close();
   };
 
-  const Item = React.memo(({ tasks }: { tasks: Task }) => {
+  const Item = React.memo(({ task }: { task: Task }) => {
     return (
       <View style={styles.item}>
         <View style={styles.imageContainer}>
-          {tasks.images && tasks.images.length > 0 ? (
-            <Image
-              source={{ uri: tasks.images[0]?.url }}
-              style={styles.image}
-            />
+          {task.images && task.images.length > 0 ? (
+            <Image source={{ uri: task.images[0]?.url }} style={styles.image} />
           ) : (
             <View style={styles.placeholder}>
               <Ionicons name="image" size={48} color="grey" />
@@ -67,15 +64,15 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.taskDetails}>
-          <Text style={Typography.body}>{tasks.title}</Text>
+          <Text style={Typography.body}>{task.title}</Text>
           <View style={styles.likesContainer}>
-            <Text style={Typography.body}>{tasks.number_of_likes}</Text>
+            <Text style={Typography.body}>{task.number_of_likes}</Text>
             <Ionicons name="heart" size={24} color="red" />
           </View>
         </View>
         <View style={styles.dateContainer}>
           <Ionicons name="calendar-outline" size={24} color="black" />
-          <Text style={Typography.body}>{formatDate(tasks.start_date)}</Text>
+          <Text style={Typography.body}>{formatDate(task.start_date)}</Text>
         </View>
       </View>
     );
@@ -84,7 +81,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
   const ListHeader = () => (
     <View style={styles.headerContainer}>
       <Text style={[Typography.title, styles.headerTitle]}>{title}</Text>
-      <TouchableOpacity onPress={() => sheetRef.current.show()}>
+      <TouchableOpacity onPress={() => BottomSheetRef.current.show()}>
         <Ionicons
           name="filter"
           size={32}
@@ -99,13 +96,13 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
     <>
       <FlatList
         data={sortedTasks}
-        renderItem={({ item }) => <Item tasks={item} />}
+        renderItem={({ item }) => <Item task={item} />}
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ListHeader}
       />
-      <BottomSheet ref={sheetRef} height={300}>
+      <BottomSheet ref={BottomSheetRef} height={300}>
         <View style={styles.sheetContainer}>
           <Text style={[Typography.title, styles.sheetTitle]}>Sort By</Text>
           <TouchableOpacity
@@ -132,7 +129,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={() => sheetRef.current.close()}
+            onPress={() => BottomSheetRef.current.close()}
           >
             <Text style={Typography.body}>Close</Text>
           </TouchableOpacity>
