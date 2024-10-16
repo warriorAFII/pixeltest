@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import TaskList from "../../components/TaskList";
 import { Task } from "../../constants/types";
@@ -8,16 +8,9 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ tasks }) => {
-  const [filteredData, setFilteredData] = useState<Task[]>([]);
-
-  useEffect(() => {
-    filterNewTasks();
+  const filteredData = useMemo(() => {
+    return tasks.filter((task) => task.status === "NEW");
   }, [tasks]);
-
-  const filterNewTasks = () => {
-    const newTasks = tasks.filter((task) => task.status === "NEW");
-    setFilteredData(newTasks);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
