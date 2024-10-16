@@ -55,7 +55,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
           ) : (
             <View style={styles.placeholder}>
               <Ionicons name="image" size={48} color="grey" />
-              <Text style={styles.placeholderText}>Failed to load image</Text>
+              <Text style={styles.placeholderText}>Image not available</Text>
             </View>
           )}
 
