@@ -4,7 +4,7 @@ export interface Task {
   status: string;
   number_of_likes: number;
   start_date: string;
-  images: {
+  images?: {
     url: string;
   }[];
 }
