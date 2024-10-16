@@ -18,13 +18,15 @@ interface TaskListProps {
   title: string;
 }
 
+type SortOrder = "time" | "alphabetical";
+
 const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
-  const [sortedData, setSortedData] = useState<Task[]>([]);
-  const [selectedSortOrder, setSelectedSortOrder] = useState<string>("time");
+  const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
+  const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder>("time");
   const sheetRef = useRef(null);
 
   useEffect(() => {
-    setSortedData(tasks);
+    setSortedTasks(tasks);
   }, [tasks]);
 
   const sortTasks = (order) => {
@@ -39,7 +41,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
       );
     }
 
-    setSortedData(tasksCopy);
+    setSortedTasks(tasksCopy);
     setSelectedSortOrder(order);
     sheetRef.current.close();
   };
@@ -96,7 +98,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, title }) => {
   return (
     <>
       <FlatList
-        data={sortedData}
+        data={sortedTasks}
         renderItem={({ item }) => <Item tasks={item} />}
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContainer}
